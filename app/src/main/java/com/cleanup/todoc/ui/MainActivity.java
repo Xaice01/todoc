@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     /**
      * List of all current tasks of the application
      */
+    //TODO récupérer les task ici
     @NonNull
     private final ArrayList<Task> tasks = new ArrayList<>();
 
@@ -134,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         return super.onOptionsItemSelected(item);
     }
 
+    //TODO a changer avec le repository
     @Override
     public void onDeleteTask(Task task) {
         tasks.remove(task);
@@ -208,6 +210,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      *
      * @param task the task to be added to the list
      */
+    //TODO a changé avec le repository
     private void addTask(@NonNull Task task) {
         tasks.add(task);
         updateTasks();

@@ -46,6 +46,7 @@ public class Project {
      *
      * @return all the projects of the application
      */
+    //TODO récuperer les données
     @NonNull
     public static Project[] getAllProjects() {
         return new Project[]{
