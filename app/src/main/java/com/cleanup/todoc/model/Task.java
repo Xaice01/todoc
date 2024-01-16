@@ -17,14 +17,14 @@ import java.util.Comparator;
  */
 @Entity( tableName = "Task" ,foreignKeys = {@ForeignKey(entity = Project.class,
         parentColumns = "id",
-        childColumns = "projectId",
-        onDelete = ForeignKey.CASCADE)
+        childColumns = "projectId")
 })
 public class Task {
     /**
      * The unique identifier of the task
      */
     @PrimaryKey
+    @NonNull
     @ColumnInfo(name = "id")
     private long id;
 

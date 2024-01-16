@@ -20,7 +20,7 @@ import java.util.concurrent.Executors;
 /*
  * Create or get Database
  */
-@Database(entities = {Project.class, Task.class, ProjectWithTasks.class}, version = 1, exportSchema = false)
+@Database(entities = {Project.class, Task.class}, version = 1, exportSchema = false)
 public abstract class TodocRoomDatabase extends RoomDatabase {
 
     public abstract ProjectDao projectDao();
