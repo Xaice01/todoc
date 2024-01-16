@@ -43,7 +43,7 @@ public class Project {
      * @param name  the name of the project to set
      * @param color the hex (ARGB) code of the color associated to the project to set
      */
-    private Project(long id, @NonNull String name, @ColorInt int color) {
+    public Project(long id, @NonNull String name, @ColorInt int color) {
         this.id = id;
         this.name = name;
         this.color = color;
@@ -54,7 +54,6 @@ public class Project {
      *
      * @return all the projects of the application
      */
-    //TODO récuperer les données
     @NonNull
     public static Project[] getAllProjects() {
         return new Project[]{

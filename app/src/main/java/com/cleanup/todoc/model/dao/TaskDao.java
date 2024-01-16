@@ -9,6 +9,8 @@ import androidx.room.Query;
 
 import com.cleanup.todoc.model.Task;
 
+import java.util.List;
+
 @Dao
 public interface TaskDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -21,8 +23,8 @@ public interface TaskDao {
     void deleteAll();
 
     @Query("SELECT * FROM Task")
-    LiveData<Task> getTasks();
+    LiveData<List<Task>> getTasks();
 
     @Query("SELECT * FROM Task ORDER BY projectId")
-    LiveData<Task> getTasksByProject();
+    LiveData<List<Task>> getTasksByProject();
 }

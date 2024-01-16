@@ -1,6 +1,7 @@
 package com.cleanup.todoc.model;
 
 import androidx.room.Embedded;
+import androidx.room.Entity;
 import androidx.room.Relation;
 
 import java.util.List;

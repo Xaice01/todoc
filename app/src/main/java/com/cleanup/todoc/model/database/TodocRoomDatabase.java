@@ -26,7 +26,7 @@ public abstract class TodocRoomDatabase extends RoomDatabase {
     public abstract ProjectDao projectDao();
     public abstract TaskDao taskDao();
     //create executor with thread pool at 4
-    static final ExecutorService executors = Executors.newFixedThreadPool(4);
+    public static final ExecutorService executors = Executors.newFixedThreadPool(4);
 
     //marking the instance as volatile to ensure atomic access to the variable
     private static volatile TodocRoomDatabase INSTANCE;
@@ -60,7 +60,12 @@ public abstract class TodocRoomDatabase extends RoomDatabase {
                 //clean all data
                 projectDao.deleteAll();
 
-                //TODO add a fake data to start (add project before task)
+                //add a fake data to start (add project before task)
+
+                projectDao.insert(new Project(1L, "Projet Tartampion", 0xFFEADAD1));
+                projectDao.insert(new Project(2L, "Projet Lucidia", 0xFFB4CDBA));
+                projectDao.insert(new Project(3L, "Projet Circus", 0xFFA3CED2));
+
 
             });
 

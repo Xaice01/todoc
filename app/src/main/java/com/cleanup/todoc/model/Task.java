@@ -39,12 +39,14 @@ public class Task {
      */
     // Suppress warning because setName is called in constructor
     @SuppressWarnings("NullableProblems")
+    @ColumnInfo(name = "name")
     @NonNull
     private String name;
 
     /**
      * The timestamp when the task has been created
      */
+    @ColumnInfo(name = "creationTimestamp")
     private long creationTimestamp;
 
     /**
@@ -80,6 +82,14 @@ public class Task {
         this.id = id;
     }
 
+    /**
+     * Return the projectId
+     *
+     * @return  the projectId of the task
+     */
+    public long getProjectId(){
+        return projectId;
+    }
     /**
      * Sets the unique identifier of the project associated to the task.
      *
@@ -118,6 +128,14 @@ public class Task {
         this.name = name;
     }
 
+    /**
+     * Return the timestamp
+     *
+     * @return  the timestamp of the task
+     */
+    public long getCreationTimestamp(){
+        return creationTimestamp;
+    }
     /**
      * Sets the timestamp when the task has been created.
      *
