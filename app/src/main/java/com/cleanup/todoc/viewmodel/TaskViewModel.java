@@ -2,6 +2,7 @@ package com.cleanup.todoc.viewmodel;
 
 import android.app.Application;
 
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.cleanup.todoc.model.Project;
@@ -15,7 +16,7 @@ import com.cleanup.todoc.model.usecase.GetTasksUseCase;
 
 import java.util.List;
 
-public class TaskViewModel {
+public class TaskViewModel extends AndroidViewModel {
 
     //----------------------------------------------------
     //Data
@@ -38,9 +39,10 @@ public class TaskViewModel {
     //Constructor
     //----------------------------------------------------
     public TaskViewModel(Application application){
-        super();
+        super(application);
         taskRepository = new TaskRepository(application);
         projectRepository = new ProjectRepository(application);
+
         getTasksUseCase = new GetTasksUseCase(taskRepository);
         getProjectsUseCase = new GetProjectsUseCase(projectRepository);
         createTaskUseCase = new CreateTaskUseCase(taskRepository);
