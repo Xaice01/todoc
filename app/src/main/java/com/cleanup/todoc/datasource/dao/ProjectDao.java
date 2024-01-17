@@ -1,4 +1,4 @@
-package com.cleanup.todoc.model.dao;
+package com.cleanup.todoc.datasource.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -8,26 +8,26 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Transaction;
 
-import com.cleanup.todoc.model.Project;
-import com.cleanup.todoc.model.ProjectWithTasks;
+import com.cleanup.todoc.datasource.model.ProjectEntity;
+import com.cleanup.todoc.datasource.model.ProjectWithTasks;
 
 import java.util.List;
 
 @Dao
 public interface ProjectDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insert(Project project);
+    void insert(ProjectEntity projectEntity);
 
     @Delete
-    void delete(Project project);
+    void delete(ProjectEntity projectEntity);
 
-    @Query("DELETE FROM Project")
+    @Query("DELETE FROM ProjectEntity")
     void deleteAll();
 
-    @Query("SELECT * FROM Project ORDER BY id")
-    LiveData<List<Project>> getProjects();
+    @Query("SELECT * FROM ProjectEntity ORDER BY id")
+    LiveData<List<ProjectEntity>> getProjects();
 
     @Transaction
-    @Query("SELECT * FROM Project")
+    @Query("SELECT * FROM ProjectEntity")
     public List<ProjectWithTasks> getProjectWithTasks();
 }

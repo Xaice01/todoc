@@ -11,8 +11,9 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cleanup.todoc.R;
-import com.cleanup.todoc.model.Project;
-import com.cleanup.todoc.model.Task;
+import com.cleanup.todoc.datasource.model.TaskEntity;
+import com.cleanup.todoc.domaine.model.ProjectDomain;
+import com.cleanup.todoc.domaine.model.TaskDomain;
 
 import java.util.List;
 
@@ -26,9 +27,9 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
      * The list of tasks the adapter deals with
      */
     @NonNull
-    private List<Task> tasks;
+    private List<TaskDomain> taskDomains;
 
-    private List<Project> projects;
+    private List<ProjectDomain> projectDomains;
 
     /**
      * The listener for when a task needs to be deleted
@@ -39,22 +40,22 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
     /**
      * Instantiates a new TasksAdapter.
      *
-     * @param tasks the list of tasks the adapter deals with to set
+     * @param taskDomains the list of tasks the adapter deals with to set
      */
-    TasksAdapter(@NonNull final List<Project> projects,@NonNull final List<Task> tasks, @NonNull final DeleteTaskListener deleteTaskListener) {
-        this.projects=projects;
-        this.tasks = tasks;
+    TasksAdapter(@NonNull final List<ProjectDomain> projectDomains, @NonNull final List<TaskDomain> taskDomains, @NonNull final DeleteTaskListener deleteTaskListener) {
+        this.projectDomains = projectDomains;
+        this.taskDomains = taskDomains;
         this.deleteTaskListener = deleteTaskListener;
     }
 
     /**
      * Updates the list of tasks the adapter deals with.
      *
-     * @param tasks the list of tasks the adapter deals with to set
+     * @param taskDomains the list of tasks the adapter deals with to set
      */
-    void updateTasks(@NonNull final List<Project> projects,@NonNull final List<Task> tasks) {
-        this.projects=projects;
-        this.tasks = tasks;
+    void updateTasks(@NonNull final List<ProjectDomain> projectsDomain, @NonNull final List<TaskDomain> taskDomains) {
+        this.projectDomains = projectsDomain;
+        this.taskDomains = taskDomains;
         notifyDataSetChanged();
     }
 
@@ -67,12 +68,12 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
 
     @Override
     public void onBindViewHolder(@NonNull TaskViewHolder taskViewHolder, int position) {
-        taskViewHolder.bind(tasks.get(position));
+        taskViewHolder.bind(taskDomains.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return tasks.size();
+        return taskDomains.size();
     }
 
     /**
@@ -82,9 +83,9 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
         /**
          * Called when a task needs to be deleted.
          *
-         * @param task the task that needs to be deleted
+         * @param taskDomain the task that needs to be deleted
          */
-        void onDeleteTask(Task task);
+        void onDeleteTask(TaskDomain taskDomain);
     }
 
     /**
@@ -138,8 +139,8 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
                 @Override
                 public void onClick(View view) {
                     final Object tag = view.getTag();
-                    if (tag instanceof Task) {
-                        TaskViewHolder.this.deleteTaskListener.onDeleteTask((Task) tag);
+                    if (tag instanceof TaskDomain) {
+                        TaskViewHolder.this.deleteTaskListener.onDeleteTask((TaskDomain) tag);
                     }
                 }
             });
@@ -148,16 +149,16 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
         /**
          * Binds a task to the item view.
          *
-         * @param task the task to bind in the item view
+         * @param taskDomain the task to bind in the item view
          */
-        void bind(Task task) {
-            lblTaskName.setText(task.getName());
-            imgDelete.setTag(task);
+        void bind(TaskDomain taskDomain) {
+            lblTaskName.setText(taskDomain.getName());
+            imgDelete.setTag(taskDomain);
 
-            final Project taskProject = task.getProject(projects);
-            if (taskProject != null) {
-                imgProject.setSupportImageTintList(ColorStateList.valueOf(taskProject.getColor()));
-                lblProjectName.setText(taskProject.getName());
+            final ProjectDomain taskProjectDomain = taskDomain.getProject(projectDomains);
+            if (taskProjectDomain != null) {
+                imgProject.setSupportImageTintList(ColorStateList.valueOf(taskProjectDomain.getColor()));
+                lblProjectName.setText(taskProjectDomain.getName());
             } else {
                 imgProject.setVisibility(View.INVISIBLE);
                 lblProjectName.setText("");

@@ -1,9 +1,10 @@
-package com.cleanup.todoc.model.usecase;
+package com.cleanup.todoc.domaine.usecase;
 
 import androidx.lifecycle.LiveData;
 
-import com.cleanup.todoc.model.Project;
-import com.cleanup.todoc.model.repository.ProjectRepository;
+import com.cleanup.todoc.datasource.model.ProjectEntity;
+import com.cleanup.todoc.data.repository.ProjectRepository;
+import com.cleanup.todoc.domaine.model.ProjectDomain;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class GetProjectsUseCase {
         this.repository = repository;
     }
 
-    public LiveData<List<Project>> getAllProjects() {
+    public LiveData<List<ProjectDomain>> getAllProjects() {
         return repository.getAllProjects();
 
     }

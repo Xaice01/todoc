@@ -1,9 +1,10 @@
-package com.cleanup.todoc.model.usecase;
+package com.cleanup.todoc.domaine.usecase;
 
 import androidx.lifecycle.LiveData;
 
-import com.cleanup.todoc.model.Task;
-import com.cleanup.todoc.model.repository.TaskRepository;
+import com.cleanup.todoc.datasource.model.TaskEntity;
+import com.cleanup.todoc.data.repository.TaskRepository;
+import com.cleanup.todoc.domaine.model.TaskDomain;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class GetTasksUseCase {
     public GetTasksUseCase(TaskRepository repository) {
         this.repository = repository;
     }
-    public LiveData<List<Task>> getAllTasks() {
+    public LiveData<List<TaskDomain>> getAllTasks() {
         return repository.getAllTasks();
     }
 }

@@ -1,55 +1,30 @@
-package com.cleanup.todoc.model;
-
+package com.cleanup.todoc.domaine.model;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.ForeignKey;
-import androidx.room.PrimaryKey;
 
 import java.util.Comparator;
 import java.util.List;
 
-/**
- * <p>Model for the tasks of the application.</p>
- *
- * @author Gaëtan HERFRAY
- */
-@Entity( tableName = "Task" ,foreignKeys = {@ForeignKey(entity = Project.class,
-        parentColumns = "id",
-        childColumns = "projectId")
-})
-public class Task {
+public class TaskDomain {
     /**
      * The unique identifier of the task
      */
-    @PrimaryKey
-    @NonNull
-    @ColumnInfo(name = "id")
     private long id;
-
     /**
      * The unique identifier of the project associated to the task
      */
-    @ColumnInfo(name = "projectId")
-    private long projectId;
 
+    private long projectId;
     /**
      * The name of the task
      */
     // Suppress warning because setName is called in constructor
-    @SuppressWarnings("NullableProblems")
-    @ColumnInfo(name = "name")
-    @NonNull
     private String name;
-
     /**
      * The timestamp when the task has been created
      */
-    @ColumnInfo(name = "creationTimestamp")
     private long creationTimestamp;
-
     /**
      * Instantiates a new Task.
      *
@@ -58,13 +33,12 @@ public class Task {
      * @param name              the name of the task to set
      * @param creationTimestamp the timestamp when the task has been created to set
      */
-    public Task(long id, long projectId, @NonNull String name, long creationTimestamp) {
+    public TaskDomain(long id, long projectId, @NonNull String name, long creationTimestamp) {
         this.setId(id);
         this.setProjectId(projectId);
         this.setName(name);
         this.setCreationTimestamp(creationTimestamp);
     }
-
     /**
      * Returns the unique identifier of the task.
      *
@@ -73,7 +47,6 @@ public class Task {
     public long getId() {
         return id;
     }
-
     /**
      * Sets the unique identifier of the task.
      *
@@ -82,13 +55,12 @@ public class Task {
     private void setId(long id) {
         this.id = id;
     }
-
     /**
      * Return the projectId
      *
-     * @return  the projectId of the task
+     * @return the projectId of the task
      */
-    public long getProjectId(){
+    public long getProjectId() {
         return projectId;
     }
     /**
@@ -99,18 +71,16 @@ public class Task {
     private void setProjectId(long projectId) {
         this.projectId = projectId;
     }
-
     /**
      * Returns the project associated to the task.
      *
-     * @param projects the list of Project form data
+     * @param projectDomains the list of Project form data
      * @return the project associated to the task
      */
     @Nullable
-    public Project getProject(List<Project> projects) {
-        return Project.getProjectById(projectId,projects);
+    public ProjectDomain getProject(List<ProjectDomain> projectDomains) {
+        return ProjectDomain.getProjectById(projectId, projectDomains);
     }
-
     /**
      * Returns the name of the task.
      *
@@ -120,7 +90,6 @@ public class Task {
     public String getName() {
         return name;
     }
-
     /**
      * Sets the name of the task.
      *
@@ -129,13 +98,12 @@ public class Task {
     private void setName(@NonNull String name) {
         this.name = name;
     }
-
     /**
      * Return the timestamp
      *
-     * @return  the timestamp of the task
+     * @return the timestamp of the task
      */
-    public long getCreationTimestamp(){
+    public long getCreationTimestamp() {
         return creationTimestamp;
     }
     /**
@@ -146,43 +114,39 @@ public class Task {
     private void setCreationTimestamp(long creationTimestamp) {
         this.creationTimestamp = creationTimestamp;
     }
-
     /**
      * Comparator to sort task from A to Z
      */
-    public static class TaskAZComparator implements Comparator<Task> {
+    public static class TaskAZComparator implements Comparator<TaskDomain> {
         @Override
-        public int compare(Task left, Task right) {
+        public int compare(TaskDomain left, TaskDomain right) {
             return left.name.compareTo(right.name);
         }
     }
-
     /**
      * Comparator to sort task from Z to A
      */
-    public static class TaskZAComparator implements Comparator<Task> {
+    public static class TaskZAComparator implements Comparator<TaskDomain> {
         @Override
-        public int compare(Task left, Task right) {
+        public int compare(TaskDomain left, TaskDomain right) {
             return right.name.compareTo(left.name);
         }
     }
-
     /**
      * Comparator to sort task from last created to first created
      */
-    public static class TaskRecentComparator implements Comparator<Task> {
+    public static class TaskRecentComparator implements Comparator<TaskDomain> {
         @Override
-        public int compare(Task left, Task right) {
+        public int compare(TaskDomain left, TaskDomain right) {
             return (int) (right.creationTimestamp - left.creationTimestamp);
         }
     }
-
     /**
      * Comparator to sort task from first created to last created
      */
-    public static class TaskOldComparator implements Comparator<Task> {
+    public static class TaskOldComparator implements Comparator<TaskDomain> {
         @Override
-        public int compare(Task left, Task right) {
+        public int compare(TaskDomain left, TaskDomain right) {
             return (int) (left.creationTimestamp - right.creationTimestamp);
         }
     }

@@ -1,4 +1,4 @@
-package com.cleanup.todoc.model;
+package com.cleanup.todoc.datasource.model;
 
 
 import androidx.annotation.ColorInt;
@@ -15,8 +15,8 @@ import java.util.List;
  *
  * @author Gaëtan HERFRAY
  */
-@Entity(tableName = "Project")
-public class Project {
+@Entity(tableName = "ProjectEntity")
+public class ProjectEntity {
     /**
      * The unique identifier of the project
      */
@@ -45,7 +45,7 @@ public class Project {
      * @param name  the name of the project to set
      * @param color the hex (ARGB) code of the color associated to the project to set
      */
-    public Project(long id, @NonNull String name, @ColorInt int color) {
+    public ProjectEntity(long id, @NonNull String name, @ColorInt int color) {
         this.id = id;
         this.name = name;
         this.color = color;
@@ -56,14 +56,14 @@ public class Project {
      * identifier can be found.
      *
      * @param id the unique identifier of the project to return
-     * @param projects the list of project from Data
+     * @param projectEntities the list of project from Data
      * @return the project with the given unique identifier, or null if it has not been found
      */
     @Nullable
-    public static Project getProjectById(long id, List<Project> projects) {
-        for (Project project : projects) {
-            if (project.id == id)
-                return project;
+    public static ProjectEntity getProjectById(long id, List<ProjectEntity> projectEntities) {
+        for (ProjectEntity projectEntity : projectEntities) {
+            if (projectEntity.id == id)
+                return projectEntity;
         }
         return null;
     }
