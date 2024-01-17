@@ -1,5 +1,6 @@
 package com.cleanup.todoc;
 
+import com.cleanup.todoc.model.Project;
 import com.cleanup.todoc.model.Task;
 
 import org.junit.Test;
@@ -7,6 +8,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -20,15 +22,20 @@ import static org.junit.Assert.assertSame;
 public class TaskUnitTest {
     @Test
     public void test_projects() {
+        List<Project> projects =new ArrayList<Project>();
+            projects.add(new Project(1L, "Projet Tartampion", 0xFFEADAD1));
+            projects.add(new Project(2L, "Projet Lucidia", 0xFFB4CDBA));
+            projects.add(new Project(3L, "Projet Circus", 0xFFA3CED2));
+
         final Task task1 = new Task(1, 1, "task 1", new Date().getTime());
         final Task task2 = new Task(2, 2, "task 2", new Date().getTime());
         final Task task3 = new Task(3, 3, "task 3", new Date().getTime());
         final Task task4 = new Task(4, 4, "task 4", new Date().getTime());
 
-        assertEquals("Projet Tartampion", task1.getProject().getName());
-        assertEquals("Projet Lucidia", task2.getProject().getName());
-        assertEquals("Projet Circus", task3.getProject().getName());
-        assertNull(task4.getProject());
+        assertEquals("Projet Tartampion", task1.getProject(projects).getName());
+        assertEquals("Projet Lucidia", task2.getProject(projects).getName());
+        assertEquals("Projet Circus", task3.getProject(projects).getName());
+        assertNull(task4.getProject(projects));
     }
 
     @Test

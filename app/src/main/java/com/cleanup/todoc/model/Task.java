@@ -9,6 +9,7 @@ import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * <p>Model for the tasks of the application.</p>
@@ -102,11 +103,12 @@ public class Task {
     /**
      * Returns the project associated to the task.
      *
+     * @param projects the list of Project form data
      * @return the project associated to the task
      */
     @Nullable
-    public Project getProject() {
-        return Project.getProjectById(projectId);
+    public Project getProject(List<Project> projects) {
+        return Project.getProjectById(projectId,projects);
     }
 
     /**

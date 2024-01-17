@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
             if(adapter!=null){updateTasks();}
         });
 
-        adapter = new TasksAdapter(tasks, this);
+        adapter = new TasksAdapter(allProjects,tasks, this);
 
         setContentView(R.layout.activity_main);
 
@@ -260,7 +260,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
                     break;
 
             }
-            adapter.updateTasks(tasks);
+            adapter.updateTasks(allProjects,tasks);
         }
     }
 
