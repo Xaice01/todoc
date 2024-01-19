@@ -7,7 +7,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.cleanup.todoc.datasource.model.TaskEntity;
+import com.cleanup.todoc.datasource.Entity.TaskEntity;
 
 import java.util.List;
 

@@ -8,8 +8,8 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Transaction;
 
-import com.cleanup.todoc.datasource.model.ProjectEntity;
-import com.cleanup.todoc.datasource.model.ProjectWithTasks;
+import com.cleanup.todoc.datasource.Entity.ProjectEntity;
+import com.cleanup.todoc.datasource.Entity.ProjectWithTasks;
 
 import java.util.List;
 

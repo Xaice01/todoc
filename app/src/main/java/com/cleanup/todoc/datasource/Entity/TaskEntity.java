@@ -1,4 +1,4 @@
-package com.cleanup.todoc.datasource.model;
+package com.cleanup.todoc.datasource.Entity;
 
 
 import androidx.annotation.NonNull;
@@ -7,8 +7,6 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
-
-import com.cleanup.todoc.domaine.model.ProjectDomain;
 
 import java.util.Comparator;
 import java.util.List;

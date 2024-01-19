@@ -10,8 +10,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.cleanup.todoc.datasource.dao.ProjectDao;
 import com.cleanup.todoc.datasource.dao.TaskDao;
-import com.cleanup.todoc.datasource.model.ProjectEntity;
-import com.cleanup.todoc.datasource.model.TaskEntity;
+import com.cleanup.todoc.datasource.Entity.ProjectEntity;
+import com.cleanup.todoc.datasource.Entity.TaskEntity;
 
 import java.util.Date;
 import java.util.concurrent.ExecutorService;

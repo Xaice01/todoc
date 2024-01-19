@@ -1,4 +1,4 @@
-package com.cleanup.todoc.ui;
+package com.cleanup.todoc.presentation.ui;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -20,10 +20,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cleanup.todoc.R;
-import com.cleanup.todoc.datasource.model.ProjectEntity;
-import com.cleanup.todoc.domaine.model.ProjectDomain;
-import com.cleanup.todoc.domaine.model.TaskDomain;
-import com.cleanup.todoc.viewmodel.TaskViewModel;
+import com.cleanup.todoc.presentation.model.Project;
+import com.cleanup.todoc.presentation.model.Task;
+import com.cleanup.todoc.presentation.viewmodel.TaskViewModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,13 +44,13 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     /**
      * List of all projects available in the application
      */
-    private List<ProjectDomain> allProjectsDomain;
+    private List<Project> allProjects;
 
     /**
      * List of all current tasks of the application
      */
     @NonNull
-    private ArrayList<TaskDomain> taskDomains = new ArrayList<>();
+    private List<Task> tasks = new ArrayList<>();
 
     /**
      * The adapter which handles the list of tasks
@@ -107,16 +106,16 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         /*
          * Observe the Livedata of List of all projects available in the application
          */
-        taskViewModel.getAllProjects().observe(this , list -> allProjectsDomain =list);
+        taskViewModel.getAllProjects().observe(this , list -> allProjects =list);
 
         /*
          * Observe the Livedata of List of all tasks in the application and update the adapter
          */
-        taskViewModel.getAllTasks().observe(this,list ->{ taskDomains = (ArrayList<TaskDomain>) list;
+        taskViewModel.getAllTasks().observe(this,list ->{ tasks = (ArrayList<Task>) list;
             if(adapter!=null){updateTasks();}
         });
 
-        adapter = new TasksAdapter(allProjectsDomain, taskDomains, this);
+        adapter = new TasksAdapter(allProjects, tasks, this);
 
         setContentView(R.layout.activity_main);
 
@@ -160,8 +159,8 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     }
 
     @Override
-    public void onDeleteTask(TaskDomain taskDomain) {
-        taskViewModel.deleteTask(taskDomain);
+    public void onDeleteTask(Task task) {
+        taskViewModel.deleteTask(task);
     }
 
     /**
@@ -176,9 +175,9 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
             String taskName = dialogEditText.getText().toString();
 
             // Get the selected project to be associated to the task
-            ProjectDomain taskProjectDomain = null;
-            if (dialogSpinner.getSelectedItem() instanceof ProjectDomain) {
-                taskProjectDomain = (ProjectDomain) dialogSpinner.getSelectedItem();
+            Project taskProject = null;
+            if (dialogSpinner.getSelectedItem() instanceof Project) {
+                taskProject = (Project) dialogSpinner.getSelectedItem();
             }
 
             // If a name has not been set
@@ -186,19 +185,19 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
                 dialogEditText.setError(getString(R.string.empty_task_name));
             }
             // If both project and name of the task have been set
-            else if (taskProjectDomain != null) {
+            else if (taskProject != null) {
                 // TODO: Replace this by id of persisted task
                 long id = (long) (Math.random() * 50000);
 
 
-                TaskDomain taskDomain = new TaskDomain(
+                Task task = new Task(
                         id,
-                        taskProjectDomain.getId(),
+                        taskProject.getId(),
                         taskName,
                         new Date().getTime()
                 );
 
-                addTask(taskDomain);
+                addTask(task);
 
                 dialogInterface.dismiss();
             }
@@ -230,17 +229,17 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     /**
      * Adds the given task to the list of created tasks.
      *
-     * @param taskDomain the task to be added to the list
+     * @param task the task to be added to the list
      */
-    private void addTask(@NonNull TaskDomain taskDomain) {
-        taskViewModel.createTask(taskDomain);
+    private void addTask(@NonNull Task task) {
+        taskViewModel.createTask(task);
     }
 
     /**
      * Updates the list of tasks in the UI
      */
     private void updateTasks() {
-        if (taskDomains.size() == 0) {
+        if (tasks.size() == 0) {
             lblNoTasks.setVisibility(View.VISIBLE);
             listTasks.setVisibility(View.GONE);
         } else {
@@ -248,20 +247,20 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
             listTasks.setVisibility(View.VISIBLE);
             switch (sortMethod) {
                 case ALPHABETICAL:
-                    Collections.sort(taskDomains, new TaskDomain.TaskAZComparator());
+                    Collections.sort(tasks, new Task.TaskAZComparator());
                     break;
                 case ALPHABETICAL_INVERTED:
-                    Collections.sort(taskDomains, new TaskDomain.TaskZAComparator());
+                    Collections.sort(tasks, new Task.TaskZAComparator());
                     break;
                 case RECENT_FIRST:
-                    Collections.sort(taskDomains, new TaskDomain.TaskRecentComparator());
+                    Collections.sort(tasks, new Task.TaskRecentComparator());
                     break;
                 case OLD_FIRST:
-                    Collections.sort(taskDomains, new TaskDomain.TaskOldComparator());
+                    Collections.sort(tasks, new Task.TaskOldComparator());
                     break;
 
             }
-            adapter.updateTasks(allProjectsDomain, taskDomains);
+            adapter.updateTasks(allProjects, tasks);
         }
     }
 
@@ -312,7 +311,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      * Sets the data of the Spinner with projects to associate to a new task
      */
     private void populateDialogSpinner() {
-        final ArrayAdapter<ProjectDomain> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, allProjectsDomain);
+        final ArrayAdapter<Project> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, allProjects);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         if (dialogSpinner != null) {
             dialogSpinner.setAdapter(adapter);

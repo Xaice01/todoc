@@ -1,5 +1,6 @@
 package com.cleanup.todoc.domaine.model;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.List;
@@ -35,5 +36,11 @@ public class ProjectDomain {
                 return project;
         }
         return null;
+    }
+
+    @Override
+    @NonNull
+    public String toString() {
+        return getName();
     }
 }

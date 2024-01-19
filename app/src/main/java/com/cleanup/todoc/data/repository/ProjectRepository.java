@@ -5,8 +5,8 @@ import android.app.Application;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
 
-import com.cleanup.todoc.data.ProjectMapper;
-import com.cleanup.todoc.datasource.model.ProjectEntity;
+import com.cleanup.todoc.data.ProjectDomainEntityMapper;
+import com.cleanup.todoc.datasource.Entity.ProjectEntity;
 import com.cleanup.todoc.datasource.dao.ProjectDao;
 import com.cleanup.todoc.datasource.database.TodocRoomDatabase;
 import com.cleanup.todoc.domaine.model.ProjectDomain;
@@ -23,7 +23,7 @@ public class ProjectRepository {
         TodocRoomDatabase db = TodocRoomDatabase.getInstance(application);
         projectDao = db.projectDao();
         LiveData<List<ProjectEntity>> TestLivedata = projectDao.getProjects();
-        allProjects = Transformations.map(TestLivedata, ProjectMapper::mapToDomainList);
+        allProjects = Transformations.map(TestLivedata, ProjectDomainEntityMapper::mapToDomainList);
     }
 
     public LiveData<List<ProjectDomain>> getAllProjects(){
@@ -31,11 +31,11 @@ public class ProjectRepository {
     }
 
     public void insert(ProjectDomain projectDomain){
-        TodocRoomDatabase.executors.execute(() -> {projectDao.insert(ProjectMapper.mapToEntity(projectDomain));});
+        TodocRoomDatabase.executors.execute(() -> {projectDao.insert(ProjectDomainEntityMapper.mapToEntity(projectDomain));});
     }
 
     public void delete(ProjectDomain projectDomain){
-        TodocRoomDatabase.executors.execute(() -> {projectDao.delete(ProjectMapper.mapToEntity(projectDomain));});
+        TodocRoomDatabase.executors.execute(() -> {projectDao.delete(ProjectDomainEntityMapper.mapToEntity(projectDomain));});
     }
 
     public void deleteAll(){

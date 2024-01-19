@@ -1,17 +1,13 @@
 package com.cleanup.todoc.data;
 
-import androidx.annotation.NonNull;
-
-import com.cleanup.todoc.datasource.model.ProjectEntity;
-import com.cleanup.todoc.datasource.model.TaskEntity;
-import com.cleanup.todoc.domaine.model.ProjectDomain;
+import com.cleanup.todoc.datasource.Entity.TaskEntity;
 import com.cleanup.todoc.domaine.model.TaskDomain;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class TaskMapper {
+public class TaskDomainEntityMapper {
 
 
     /**

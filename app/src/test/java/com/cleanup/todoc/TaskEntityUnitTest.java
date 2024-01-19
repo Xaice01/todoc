@@ -1,7 +1,7 @@
 package com.cleanup.todoc;
 
-import com.cleanup.todoc.datasource.model.ProjectEntity;
-import com.cleanup.todoc.datasource.model.TaskEntity;
+import com.cleanup.todoc.datasource.Entity.ProjectEntity;
+import com.cleanup.todoc.datasource.Entity.TaskEntity;
 
 import org.junit.Test;
 

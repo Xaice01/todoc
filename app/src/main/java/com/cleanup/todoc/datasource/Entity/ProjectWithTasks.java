@@ -1,4 +1,4 @@
-package com.cleanup.todoc.datasource.model;
+package com.cleanup.todoc.datasource.Entity;
 
 import androidx.room.Embedded;
 import androidx.room.Relation;

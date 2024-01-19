@@ -1,13 +1,13 @@
 package com.cleanup.todoc.data;
 
-import com.cleanup.todoc.datasource.model.ProjectEntity;
+import com.cleanup.todoc.datasource.Entity.ProjectEntity;
 import com.cleanup.todoc.domaine.model.ProjectDomain;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ProjectMapper {
+public class ProjectDomainEntityMapper {
 
     /**
      * Maps a Room entity Project to a domain object ProjectDomain.

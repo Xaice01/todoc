@@ -1,12 +1,7 @@
-package com.cleanup.todoc.datasource.model;
-
-
+package com.cleanup.todoc.presentation.model;
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 
 import java.util.List;
 
@@ -15,26 +10,21 @@ import java.util.List;
  *
  * @author Gaëtan HERFRAY
  */
-@Entity(tableName = "ProjectEntity")
-public class ProjectEntity {
+public class Project {
     /**
      * The unique identifier of the project
      */
-    @PrimaryKey
-    @ColumnInfo(name = "id")
     private final long id;
 
     /**
      * The name of the project
      */
     @NonNull
-    @ColumnInfo(name = "name")
     private final String name;
 
     /**
      * The hex (ARGB) code of the color associated to the project
      */
-    @ColumnInfo(name = "color")
     @ColorInt
     private final int color;
 
@@ -45,25 +35,25 @@ public class ProjectEntity {
      * @param name  the name of the project to set
      * @param color the hex (ARGB) code of the color associated to the project to set
      */
-    public ProjectEntity(long id, @NonNull String name, @ColorInt int color) {
+    public Project(long id, @NonNull String name, @ColorInt int color) {
         this.id = id;
         this.name = name;
         this.color = color;
     }
+
 
     /**
      * Returns the project with the given unique identifier, or null if no project with that
      * identifier can be found.
      *
      * @param id the unique identifier of the project to return
-     * @param projectEntities the list of project from Data
      * @return the project with the given unique identifier, or null if it has not been found
      */
     @Nullable
-    public static ProjectEntity getProjectById(long id, List<ProjectEntity> projectEntities) {
-        for (ProjectEntity projectEntity : projectEntities) {
-            if (projectEntity.id == id)
-                return projectEntity;
+    public static Project getProjectById(long id, List<Project> projects) {
+        for (Project project : projects) {
+            if (project.id == id)
+                return project;
         }
         return null;
     }

@@ -1,11 +1,10 @@
-package com.cleanup.todoc.viewmodel;
+package com.cleanup.todoc.presentation.viewmodel;
 
 import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.cleanup.todoc.datasource.model.TaskEntity;
 import com.cleanup.todoc.data.repository.ProjectRepository;
 import com.cleanup.todoc.data.repository.TaskRepository;
 import com.cleanup.todoc.domaine.model.ProjectDomain;
@@ -14,6 +13,8 @@ import com.cleanup.todoc.domaine.usecase.CreateTaskUseCase;
 import com.cleanup.todoc.domaine.usecase.DeleteTaskUseCase;
 import com.cleanup.todoc.domaine.usecase.GetProjectsUseCase;
 import com.cleanup.todoc.domaine.usecase.GetTasksUseCase;
+import com.cleanup.todoc.presentation.model.Project;
+import com.cleanup.todoc.presentation.model.Task;
 
 import java.util.List;
 
@@ -24,8 +25,8 @@ public class TaskViewModel extends AndroidViewModel {
     //----------------------------------------------------
     private TaskRepository taskRepository;
     private ProjectRepository projectRepository;
-    private LiveData<List<TaskDomain>> allTasks;
-    private LiveData<List<ProjectDomain>> allProjects;
+    private LiveData<List<Task>> allTasks;
+    private LiveData<List<Project>> allProjects;
 
     //----------------------------------------------------
     //UseCase
@@ -53,12 +54,12 @@ public class TaskViewModel extends AndroidViewModel {
         allProjects = getProjectsUseCase.getAllProjects();
     }
 
-    public LiveData<List<TaskDomain>> getAllTasks(){ return allTasks;}
+    public LiveData<List<Task>> getAllTasks(){ return allTasks;}
 
-    public LiveData<List<ProjectDomain>> getAllProjects(){return allProjects;}
+    public LiveData<List<Project>> getAllProjects(){return allProjects;}
 
-    public void createTask(TaskDomain taskDomain){createTaskUseCase.createTask(taskDomain);}
+    public void createTask(Task task){createTaskUseCase.createTask(task);}
 
-    public void deleteTask(TaskDomain taskDomain){deleteTaskUseCase.deleteTask(taskDomain);}
+    public void deleteTask(Task task){deleteTaskUseCase.deleteTask(task);}
 
 }
