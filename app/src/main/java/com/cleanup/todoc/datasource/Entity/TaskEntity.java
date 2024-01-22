@@ -6,33 +6,34 @@ import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.util.Comparator;
 import java.util.List;
 
 /**
- * <p>Model for the tasks of the application.</p>
+ * <p>Entity for the tasks of the application.</p>
  *
- * @author Gaëtan HERFRAY
+ * @author Xavier Carpentier
  */
 @Entity( tableName = "TaskEntity" ,foreignKeys = {@ForeignKey(entity = ProjectEntity.class,
         parentColumns = "id",
         childColumns = "projectId")
+
 })
 public class TaskEntity {
     /**
      * The unique identifier of the task
      */
-    @PrimaryKey
-    @NonNull
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     private long id;
 
     /**
      * The unique identifier of the project associated to the task
      */
-    @ColumnInfo(name = "projectId")
+    @ColumnInfo(name = "projectId", index = true)
     private long projectId;
 
     /**
@@ -103,12 +104,12 @@ public class TaskEntity {
     /**
      * Returns the project associated to the task.
      *
-     * @param projectEntities the list of Project form data
+     * @param projectEntity the list of Project form data
      * @return the project associated to the task
      */
     @Nullable
-    public ProjectEntity getProject(List<ProjectEntity> projectEntities) {
-        return ProjectEntity.getProjectById(projectId, projectEntities);
+    public ProjectEntity getProject(List<ProjectEntity> projectEntity) {
+        return ProjectEntity.getProjectById(projectId, projectEntity);
     }
 
 
@@ -146,45 +147,5 @@ public class TaskEntity {
      */
     private void setCreationTimestamp(long creationTimestamp) {
         this.creationTimestamp = creationTimestamp;
-    }
-
-    /**
-     * Comparator to sort task from A to Z
-     */
-    public static class TaskAZComparator implements Comparator<TaskEntity> {
-        @Override
-        public int compare(TaskEntity left, TaskEntity right) {
-            return left.name.compareTo(right.name);
-        }
-    }
-
-    /**
-     * Comparator to sort task from Z to A
-     */
-    public static class TaskZAComparator implements Comparator<TaskEntity> {
-        @Override
-        public int compare(TaskEntity left, TaskEntity right) {
-            return right.name.compareTo(left.name);
-        }
-    }
-
-    /**
-     * Comparator to sort task from last created to first created
-     */
-    public static class TaskRecentComparator implements Comparator<TaskEntity> {
-        @Override
-        public int compare(TaskEntity left, TaskEntity right) {
-            return (int) (right.creationTimestamp - left.creationTimestamp);
-        }
-    }
-
-    /**
-     * Comparator to sort task from first created to last created
-     */
-    public static class TaskOldComparator implements Comparator<TaskEntity> {
-        @Override
-        public int compare(TaskEntity left, TaskEntity right) {
-            return (int) (left.creationTimestamp - right.creationTimestamp);
-        }
     }
 }

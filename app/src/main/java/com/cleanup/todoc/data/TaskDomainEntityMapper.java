@@ -6,10 +6,12 @@ import com.cleanup.todoc.domaine.model.TaskDomain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
+/**
+ * <p>Map for convert TaskEntity in to TaskDomain and TaskDomain in to TaskEntity.</p>
+ *
+ * @author Xavier Carpentier
+ */
 public class TaskDomainEntityMapper {
-
-
     /**
      * Maps a Room entity Task to a domain object TaskDomain.
      *

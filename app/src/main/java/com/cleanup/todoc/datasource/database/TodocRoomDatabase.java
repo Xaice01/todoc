@@ -12,8 +12,11 @@ import com.cleanup.todoc.datasource.dao.ProjectDao;
 import com.cleanup.todoc.datasource.dao.TaskDao;
 import com.cleanup.todoc.datasource.Entity.ProjectEntity;
 import com.cleanup.todoc.datasource.Entity.TaskEntity;
+import com.cleanup.todoc.presentation.model.Project;
 
+import java.io.File;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -62,11 +65,20 @@ public abstract class TodocRoomDatabase extends RoomDatabase {
 
                 //add a fake data to start (add project before task)
 
-                projectDao.insert(new ProjectEntity(1L, "Projet Tartampion", 0xFFEADAD1));
-                projectDao.insert(new ProjectEntity(2L, "Projet Lucidia", 0xFFB4CDBA));
-                projectDao.insert(new ProjectEntity(3L, "Projet Circus", 0xFFA3CED2));
+               // ReaderJson readerjson = new ReaderJson();
+               // File fileProjectJson = new File("app/sampledata/project.json");
+               // List<ProjectEntity> projects = readerjson.getProjectListByJsonFile(fileProjectJson);
+//
+               // for(ProjectEntity projectEntity : projects){
+               //     projectDao.insert(projectEntity);
+               // }
 
-                taskDao.insert(new TaskEntity(1,2L,"Test",new Date().getTime()));
+                projectDao.insert(new ProjectEntity(0, "Projet Tartampion", 0xFFEADAD1));
+                projectDao.insert(new ProjectEntity(0, "Projet Lucidia", 0xFFB4CDBA));
+                projectDao.insert(new ProjectEntity(0, "Projet Circus", 0xFFA3CED2));
+
+                taskDao.insert(new TaskEntity(0,2L,"Test",new Date().getTime()));
+                taskDao.insert(new TaskEntity(0,3L,"Test2",new Date().getTime()));
 
 
             });

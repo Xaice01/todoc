@@ -6,6 +6,11 @@ import androidx.annotation.Nullable;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * <p>Domain for the tasks of the application.</p>
+ *
+ * @author Xavier Carpentier
+ */
 public class TaskDomain {
     /**
      * The unique identifier of the task
@@ -72,16 +77,6 @@ public class TaskDomain {
         this.projectId = projectId;
     }
     /**
-     * Returns the project associated to the task.
-     *
-     * @param projectDomains the list of Project form data
-     * @return the project associated to the task
-     */
-    @Nullable
-    public ProjectDomain getProject(List<ProjectDomain> projectDomains) {
-        return ProjectDomain.getProjectById(projectId, projectDomains);
-    }
-    /**
      * Returns the name of the task.
      *
      * @return the name of the task
@@ -114,40 +109,5 @@ public class TaskDomain {
     private void setCreationTimestamp(long creationTimestamp) {
         this.creationTimestamp = creationTimestamp;
     }
-    /**
-     * Comparator to sort task from A to Z
-     */
-    public static class TaskAZComparator implements Comparator<TaskDomain> {
-        @Override
-        public int compare(TaskDomain left, TaskDomain right) {
-            return left.name.compareTo(right.name);
-        }
-    }
-    /**
-     * Comparator to sort task from Z to A
-     */
-    public static class TaskZAComparator implements Comparator<TaskDomain> {
-        @Override
-        public int compare(TaskDomain left, TaskDomain right) {
-            return right.name.compareTo(left.name);
-        }
-    }
-    /**
-     * Comparator to sort task from last created to first created
-     */
-    public static class TaskRecentComparator implements Comparator<TaskDomain> {
-        @Override
-        public int compare(TaskDomain left, TaskDomain right) {
-            return (int) (right.creationTimestamp - left.creationTimestamp);
-        }
-    }
-    /**
-     * Comparator to sort task from first created to last created
-     */
-    public static class TaskOldComparator implements Comparator<TaskDomain> {
-        @Override
-        public int compare(TaskDomain left, TaskDomain right) {
-            return (int) (left.creationTimestamp - right.creationTimestamp);
-        }
-    }
+
 }

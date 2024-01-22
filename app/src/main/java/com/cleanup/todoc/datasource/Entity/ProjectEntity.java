@@ -11,16 +11,16 @@ import androidx.room.PrimaryKey;
 import java.util.List;
 
 /**
- * <p>Models for project in which tasks are included.</p>
+ * <p>Entity for project in which tasks are included.</p>
  *
- * @author Gaëtan HERFRAY
+ * @author Xavier Carpentier
  */
 @Entity(tableName = "ProjectEntity")
 public class ProjectEntity {
     /**
      * The unique identifier of the project
      */
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     private final long id;
 
@@ -97,9 +97,4 @@ public class ProjectEntity {
         return color;
     }
 
-    @Override
-    @NonNull
-    public String toString() {
-        return getName();
-    }
 }

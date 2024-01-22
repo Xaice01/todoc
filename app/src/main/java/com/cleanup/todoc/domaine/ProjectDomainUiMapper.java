@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * <p>Map for convert ProjectDomain in to Project and project in to ProjectDomain.</p>
+ *
+ * @author Xavier Carpentier
+ */
 public class ProjectDomainUiMapper {
 
     /**

@@ -87,6 +87,11 @@ public class Project {
         return color;
     }
 
+    /**
+     * Returns a string for a spinner
+     *
+     * @return name
+     */
     @Override
     @NonNull
     public String toString() {

@@ -17,7 +17,11 @@ import com.cleanup.todoc.presentation.model.Project;
 import com.cleanup.todoc.presentation.model.Task;
 
 import java.util.List;
-
+/**
+ * <p>ViewModel for MainActivity.</p>
+ *
+ * @author Xavier Carpentier
+ */
 public class TaskViewModel extends AndroidViewModel {
 
     //----------------------------------------------------

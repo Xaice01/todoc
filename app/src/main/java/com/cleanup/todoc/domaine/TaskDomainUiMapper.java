@@ -7,10 +7,12 @@ import com.cleanup.todoc.presentation.model.Task;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
+/**
+ * <p>Map for convert TaskDomain in to Task and Task in to TaskDomain.</p>
+ *
+ * @author Xavier Carpentier
+ */
 public class TaskDomainUiMapper {
-
-
     /**
      * Maps a TaskDomain to a domain object Task.
      *

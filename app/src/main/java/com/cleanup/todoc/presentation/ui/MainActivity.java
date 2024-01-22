@@ -33,7 +33,7 @@ import java.util.List;
  * <p>Home activity of the application which is displayed when the user opens the app.</p>
  * <p>Displays the list of tasks.</p>
  *
- * @author Gaëtan HERFRAY
+ * @author Gaëtan HERFRAY and Xavier Carpentier
  */
 public class MainActivity extends AppCompatActivity implements TasksAdapter.DeleteTaskListener {
     /*
@@ -186,9 +186,8 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
             }
             // If both project and name of the task have been set
             else if (taskProject != null) {
-                // TODO: Replace this by id of persisted task
-                long id = (long) (Math.random() * 50000);
-
+                // the logique data generate id
+                long id =0;
 
                 Task task = new Task(
                         id,

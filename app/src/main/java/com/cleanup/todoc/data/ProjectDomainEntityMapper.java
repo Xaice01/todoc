@@ -6,7 +6,11 @@ import com.cleanup.todoc.domaine.model.ProjectDomain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
+/**
+ * <p>Map for convert ProjectEntity in to ProjectDomain and ProjectDomain in to ProjectEntity.</p>
+ *
+ * @author Xavier Carpentier
+ */
 public class ProjectDomainEntityMapper {
 
     /**

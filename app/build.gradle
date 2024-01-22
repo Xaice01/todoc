@@ -19,6 +19,7 @@ android {
     lintOptions {
         disable 'RestrictedApi'
     }
+    namespace 'com.cleanup.todoc'
 }
 
 dependencies {
@@ -48,5 +49,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata:2.7.0"
     implementation "androidx.lifecycle:lifecycle-common-java8:2.7.0"
 
+    // ObjectMapper
+    //implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
 
 }
