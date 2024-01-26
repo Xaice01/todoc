@@ -14,7 +14,7 @@ import com.cleanup.todoc.domaine.model.ProjectDomain;
 import java.util.List;
 
 public class ProjectRepository {
-    private ProjectDao projectDao;
+    private final ProjectDao projectDao;
     LiveData<List<ProjectDomain>> allProjects;
 
 
@@ -22,8 +22,8 @@ public class ProjectRepository {
     public ProjectRepository(Application application){
         TodocRoomDatabase db = TodocRoomDatabase.getInstance(application);
         projectDao = db.projectDao();
-        LiveData<List<ProjectEntity>> TestLivedata = projectDao.getProjects();
-        allProjects = Transformations.map(TestLivedata, ProjectDomainEntityMapper::mapToDomainList);
+        LiveData<List<ProjectEntity>> livedata = projectDao.getProjects();
+        allProjects = Transformations.map(livedata, ProjectDomainEntityMapper::mapToDomainList);
     }
 
     public LiveData<List<ProjectDomain>> getAllProjects(){

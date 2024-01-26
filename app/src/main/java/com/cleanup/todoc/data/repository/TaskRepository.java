@@ -11,11 +11,10 @@ import com.cleanup.todoc.datasource.database.TodocRoomDatabase;
 import com.cleanup.todoc.domaine.model.TaskDomain;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 public class TaskRepository {
 
-    private TaskDao taskDao;
+    private final TaskDao taskDao;
     LiveData<List<TaskDomain>> allTasks;
     LiveData<List<TaskDomain>> allTasksOrderByProject;
 
@@ -41,10 +40,6 @@ public class TaskRepository {
 
     public void delete(TaskDomain taskDomain){
         TodocRoomDatabase.executors.execute(() -> {taskDao.delete(TaskDomainEntityMapper.mapToEntity(taskDomain));});
-    }
-
-    public void deleteAll(){
-        TodocRoomDatabase.executors.execute(() -> {taskDao.deleteAll();});
     }
 
 }
