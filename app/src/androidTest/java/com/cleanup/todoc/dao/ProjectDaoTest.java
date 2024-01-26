@@ -53,7 +53,7 @@ public class ProjectDaoTest {
     public void testInsert(){
         //When
         projectDao.insert(project1);
-        List<ProjectEntity> projects = projectDao.getProjects().getValue();
+        List<ProjectEntity> projects = TestUtilsDao.getValue(projectDao.getProjects());
 
         //Then
         assertEquals(1,projects.size());
@@ -63,14 +63,14 @@ public class ProjectDaoTest {
     public void testDelete(){
         //Given
         projectDao.insert(project2);
-        List<ProjectEntity> projectsGiven = projectDao.getProjects().getValue();
+        List<ProjectEntity> projectsGiven = TestUtilsDao.getValue(projectDao.getProjects());
         assertEquals(1,projectsGiven.size());
 
         //When
         projectDao.delete(project2);
 
         //Then
-        List<ProjectEntity> projectsThen = projectDao.getProjects().getValue();
+        List<ProjectEntity> projectsThen = TestUtilsDao.getValue(projectDao.getProjects());
         assertEquals(0,projectsThen.size());
     }
 
@@ -82,13 +82,13 @@ public class ProjectDaoTest {
         projectDao.insert(project3);
 
         //When
-        List<ProjectEntity> projects = projectDao.getProjects().getValue();
+        List<ProjectEntity> projects = TestUtilsDao.getValue(projectDao.getProjects());
 
         //Then
         assertEquals(3,projects.size());
-        assertEquals(project1,projects.get(0));
-        assertEquals(project2,projects.get(1));
-        assertEquals(project3,projects.get(2));
+        assertEquals(project1.getId(),projects.get(0).getId());
+        assertEquals(project2.getId(),projects.get(1).getId());
+        assertEquals(project3.getId(),projects.get(2).getId());
     }
 
     @Test
@@ -97,14 +97,14 @@ public class ProjectDaoTest {
         projectDao.insert(project1);
         projectDao.insert(project2);
         projectDao.insert(project3);
-        List<ProjectEntity> projectsGiven = projectDao.getProjects().getValue();
+        List<ProjectEntity> projectsGiven = TestUtilsDao.getValue(projectDao.getProjects());
         assertEquals(3,projectsGiven.size());
 
         //When
         projectDao.deleteAll();
 
         //Then
-        List<ProjectEntity> projectsThen = projectDao.getProjects().getValue();
+        List<ProjectEntity> projectsThen = TestUtilsDao.getValue(projectDao.getProjects());
         assertEquals(0,projectsThen.size());
     }
 

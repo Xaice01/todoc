@@ -20,7 +20,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -60,8 +59,8 @@ public abstract class TodocRoomDatabase extends RoomDatabase {
                     projectDao.insert(projectEntity);
                 }
 
-                taskDao.insert(new TaskEntity(0,2L,"Test",new Date().getTime()));
-                taskDao.insert(new TaskEntity(0,3L,"Test2",new Date().getTime()));
+                //taskDao.insert(new TaskEntity(0,2L,"Test",new Date().getTime()));
+                //taskDao.insert(new TaskEntity(0,3L,"Test2",new Date().getTime()));
 
             });
 

@@ -68,7 +68,7 @@ public class TaskDaoTest {
     public void testInsert(){
         //When
         taskDao.insert(task1);
-        List<TaskEntity> tasks = taskDao.getTasks().getValue();
+        List<TaskEntity> tasks = TestUtilsDao.getValue(taskDao.getTasks());
 
         //Then
         assertEquals(1,tasks.size());
@@ -78,14 +78,14 @@ public class TaskDaoTest {
     public void testDelete(){
         //Given
         taskDao.insert(task2);
-        List<TaskEntity> tasksGiven = taskDao.getTasks().getValue();
+        List<TaskEntity> tasksGiven = TestUtilsDao.getValue(taskDao.getTasks());
         assertEquals(1,tasksGiven.size());
 
         //When
         taskDao.delete(task2);
 
         //Then
-        List<TaskEntity> tasksThen = taskDao.getTasks().getValue();
+        List<TaskEntity> tasksThen = TestUtilsDao.getValue(taskDao.getTasks());
         assertEquals(0,tasksThen.size());
     }
 
@@ -97,13 +97,13 @@ public class TaskDaoTest {
         taskDao.insert(task3);
 
         //When
-        List<TaskEntity> tasks = taskDao.getTasks().getValue();
+        List<TaskEntity> tasks = TestUtilsDao.getValue(taskDao.getTasks());
 
         //Then
         assertEquals(3,tasks.size());
-        assertEquals(task1,tasks.get(0));
-        assertEquals(task2,tasks.get(1));
-        assertEquals(task3,tasks.get(2));
+        assertEquals(task1.getId(),tasks.get(0).getId());
+        assertEquals(task2.getId(),tasks.get(1).getId());
+        assertEquals(task3.getId(),tasks.get(2).getId());
     }
 
     @Test
@@ -114,13 +114,13 @@ public class TaskDaoTest {
         taskDao.insert(task3);
 
         //When
-        List<TaskEntity> tasks = taskDao.getTasks().getValue();
+        List<TaskEntity> tasks = TestUtilsDao.getValue(taskDao.getTasksByProject());
 
         //Then
         assertEquals(3,tasks.size());
-        assertEquals(task2,tasks.get(0));
-        assertEquals(task1,tasks.get(1));
-        assertEquals(task3,tasks.get(2));
+        assertEquals(task2.getId(),tasks.get(0).getId());
+        assertEquals(task1.getId(),tasks.get(1).getId());
+        assertEquals(task3.getId(),tasks.get(2).getId());
     }
 
 }
