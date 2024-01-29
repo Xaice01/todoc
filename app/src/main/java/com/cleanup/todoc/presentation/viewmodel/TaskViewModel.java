@@ -7,8 +7,6 @@ import androidx.lifecycle.LiveData;
 
 import com.cleanup.todoc.data.repository.ProjectRepository;
 import com.cleanup.todoc.data.repository.TaskRepository;
-import com.cleanup.todoc.domaine.model.ProjectDomain;
-import com.cleanup.todoc.domaine.model.TaskDomain;
 import com.cleanup.todoc.domaine.usecase.CreateTaskUseCase;
 import com.cleanup.todoc.domaine.usecase.DeleteTaskUseCase;
 import com.cleanup.todoc.domaine.usecase.GetProjectsUseCase;
