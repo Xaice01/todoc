@@ -1,4 +1,4 @@
-package com.cleanup.todoc.ui;
+package com.cleanup.todoc.presentation.ui;
 
 import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
@@ -11,8 +11,8 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cleanup.todoc.R;
-import com.cleanup.todoc.model.Project;
-import com.cleanup.todoc.model.Task;
+import com.cleanup.todoc.presentation.model.Project;
+import com.cleanup.todoc.presentation.model.Task;
 
 import java.util.List;
 
@@ -28,6 +28,8 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
     @NonNull
     private List<Task> tasks;
 
+    private List<Project> projects;
+
     /**
      * The listener for when a task needs to be deleted
      */
@@ -38,8 +40,10 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
      * Instantiates a new TasksAdapter.
      *
      * @param tasks the list of tasks the adapter deals with to set
+     * @param projects the list of Project
      */
-    TasksAdapter(@NonNull final List<Task> tasks, @NonNull final DeleteTaskListener deleteTaskListener) {
+    TasksAdapter(@NonNull final List<Project> projects, @NonNull final List<Task> tasks, @NonNull final DeleteTaskListener deleteTaskListener) {
+        this.projects = projects;
         this.tasks = tasks;
         this.deleteTaskListener = deleteTaskListener;
     }
@@ -49,7 +53,8 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
      *
      * @param tasks the list of tasks the adapter deals with to set
      */
-    void updateTasks(@NonNull final List<Task> tasks) {
+    void updateTasks(@NonNull final List<Project> projects, @NonNull final List<Task> tasks) {
+        this.projects = projects;
         this.tasks = tasks;
         notifyDataSetChanged();
     }
@@ -150,7 +155,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
             lblTaskName.setText(task.getName());
             imgDelete.setTag(task);
 
-            final Project taskProject = task.getProject();
+            final Project taskProject = task.getProject(projects);
             if (taskProject != null) {
                 imgProject.setSupportImageTintList(ColorStateList.valueOf(taskProject.getColor()));
                 lblProjectName.setText(taskProject.getName());

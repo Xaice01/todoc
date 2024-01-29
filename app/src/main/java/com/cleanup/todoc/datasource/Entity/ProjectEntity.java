@@ -1,30 +1,40 @@
-package com.cleanup.todoc.model;
+package com.cleanup.todoc.datasource.Entity;
 
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+import java.util.List;
 
 /**
- * <p>Models for project in which tasks are included.</p>
+ * <p>Entity for project in which tasks are included.</p>
  *
- * @author Gaëtan HERFRAY
+ * @author Xavier Carpentier
  */
-public class Project {
+@Entity(tableName = "ProjectEntity")
+public class ProjectEntity {
     /**
      * The unique identifier of the project
      */
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
     private final long id;
 
     /**
      * The name of the project
      */
     @NonNull
+    @ColumnInfo(name = "name")
     private final String name;
 
     /**
      * The hex (ARGB) code of the color associated to the project
      */
+    @ColumnInfo(name = "color")
     @ColorInt
     private final int color;
 
@@ -35,25 +45,10 @@ public class Project {
      * @param name  the name of the project to set
      * @param color the hex (ARGB) code of the color associated to the project to set
      */
-    private Project(long id, @NonNull String name, @ColorInt int color) {
+    public ProjectEntity(long id, @NonNull String name, @ColorInt int color) {
         this.id = id;
         this.name = name;
         this.color = color;
-    }
-
-    /**
-     * Returns all the projects of the application.
-     *
-     * @return all the projects of the application
-     */
-    //TODO récuperer les données
-    @NonNull
-    public static Project[] getAllProjects() {
-        return new Project[]{
-                new Project(1L, "Projet Tartampion", 0xFFEADAD1),
-                new Project(2L, "Projet Lucidia", 0xFFB4CDBA),
-                new Project(3L, "Projet Circus", 0xFFA3CED2),
-        };
     }
 
     /**
@@ -61,13 +56,14 @@ public class Project {
      * identifier can be found.
      *
      * @param id the unique identifier of the project to return
+     * @param projectEntities the list of project from Data
      * @return the project with the given unique identifier, or null if it has not been found
      */
     @Nullable
-    public static Project getProjectById(long id) {
-        for (Project project : getAllProjects()) {
-            if (project.id == id)
-                return project;
+    public static ProjectEntity getProjectById(long id, List<ProjectEntity> projectEntities) {
+        for (ProjectEntity projectEntity : projectEntities) {
+            if (projectEntity.id == id)
+                return projectEntity;
         }
         return null;
     }
@@ -101,9 +97,4 @@ public class Project {
         return color;
     }
 
-    @Override
-    @NonNull
-    public String toString() {
-        return getName();
-    }
 }
