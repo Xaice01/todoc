@@ -51,22 +51,6 @@ public class ProjectEntity {
         this.color = color;
     }
 
-    /**
-     * Returns the project with the given unique identifier, or null if no project with that
-     * identifier can be found.
-     *
-     * @param id the unique identifier of the project to return
-     * @param projectEntities the list of project from Data
-     * @return the project with the given unique identifier, or null if it has not been found
-     */
-    @Nullable
-    public static ProjectEntity getProjectById(long id, List<ProjectEntity> projectEntities) {
-        for (ProjectEntity projectEntity : projectEntities) {
-            if (projectEntity.id == id)
-                return projectEntity;
-        }
-        return null;
-    }
 
     /**
      * Returns the unique identifier of the project.

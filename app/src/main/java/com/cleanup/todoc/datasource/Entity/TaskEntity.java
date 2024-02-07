@@ -101,17 +101,6 @@ public class TaskEntity {
         this.projectId = projectId;
     }
 
-    /**
-     * Returns the project associated to the task.
-     *
-     * @param projectEntity the list of Project form data
-     * @return the project associated to the task
-     */
-    @Nullable
-    public ProjectEntity getProject(List<ProjectEntity> projectEntity) {
-        return ProjectEntity.getProjectById(projectId, projectEntity);
-    }
-
 
     /**
      * Returns the name of the task.
