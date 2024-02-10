@@ -131,7 +131,7 @@ public class UseCaseUnitTest {
         projectLiveData.setValue(projects);
 
         //When
-        when(projectRepository.getAllProjects()).thenReturn(projectLiveData);
+        when(projectRepository.allProjects).thenReturn(projectLiveData);
         LiveData<List<Project>> listProject = getProjectsUseCase.getAllProjects();
 
         //Then

@@ -54,10 +54,10 @@ public class TaskViewModelUnitTest {
 
 
         // Call the getAllProjects method
-        LiveData<List<Project>> allProjects = taskViewModel.getAllProjects();
+        LiveData<List<Project>> allProjects = taskViewModel.allProjects;
 
         // Assert taskViewModel projects is equal at repository projects
-        assertEquals(allProjects.getValue(),projectRepository.getAllProjects().getValue());
+        assertEquals(allProjects.getValue(), projectRepository.allProjects.getValue());
     }
 
     @Test
@@ -69,7 +69,7 @@ public class TaskViewModelUnitTest {
 
 
         // Call the getAllProjects method
-        LiveData<List<Task>> allTasks = taskViewModel.getAllTasks();
+        LiveData<List<Task>> allTasks = taskViewModel.allTasks;
 
         // Assert taskViewModel projects is equal at repository projects
         assertEquals(allTasks.getValue(),taskRepository.getAllTasks().getValue());

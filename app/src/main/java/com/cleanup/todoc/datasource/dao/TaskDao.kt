@@ -1,27 +1,25 @@
-package com.cleanup.todoc.datasource.dao;
+package com.cleanup.todoc.datasource.dao
 
-import androidx.lifecycle.LiveData;
-import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
-import androidx.room.Query;
-
-import com.cleanup.todoc.datasource.Entity.TaskEntity;
-
-import java.util.List;
+import androidx.lifecycle.LiveData
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import com.cleanup.todoc.datasource.entity.TaskEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
-public interface TaskDao {
+interface TaskDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insert(TaskEntity taskEntity);
+    suspend fun insert(taskEntity: TaskEntity)
 
     @Delete
-    void delete(TaskEntity taskEntity);
+    suspend fun delete(taskEntity: TaskEntity)
 
     @Query("SELECT * FROM TaskEntity")
-    LiveData<List<TaskEntity>> getTasks();
+    fun getTasks(): Flow<List<TaskEntity>>
 
     @Query("SELECT * FROM TaskEntity ORDER BY projectId")
-    LiveData<List<TaskEntity>> getTasksByProject();
+    fun getTasksByProject(): Flow<List<TaskEntity>>
 }

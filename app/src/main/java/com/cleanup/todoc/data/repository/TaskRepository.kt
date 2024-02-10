@@ -1,45 +1,46 @@
-package com.cleanup.todoc.data.repository;
+package com.cleanup.todoc.data.repository
 
-import android.app.Application;
+import android.app.Application
+import com.cleanup.todoc.data.TaskDomainEntityMapper
+import com.cleanup.todoc.datasource.dao.TaskDao
+import com.cleanup.todoc.datasource.database.TodocRoomDatabase
+import com.cleanup.todoc.datasource.entity.TaskEntity
+import com.cleanup.todoc.domaine.model.TaskDomain
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Transformations;
-
-import com.cleanup.todoc.data.TaskDomainEntityMapper;
-import com.cleanup.todoc.datasource.dao.TaskDao;
-import com.cleanup.todoc.datasource.database.TodocRoomDatabase;
-import com.cleanup.todoc.domaine.model.TaskDomain;
-
-import java.util.List;
-
-public class TaskRepository {
-
-    private final TaskDao taskDao;
-    LiveData<List<TaskDomain>> allTasks;
-    LiveData<List<TaskDomain>> allTasksOrderByProject;
+class TaskRepository(application: Application) {
+    private val taskDao: TaskDao
+    var allTasks: Flow<List<TaskDomain>>
+    var allTasksOrderByProject: Flow<List<TaskDomain>>
 
     //constructor
-    public TaskRepository(Application application){
-        TodocRoomDatabase db = TodocRoomDatabase.getInstance(application);
-        taskDao = db.taskDao();
-        allTasks = Transformations.map(taskDao.getTasks(), TaskDomainEntityMapper::mapToDomainList);
-        allTasksOrderByProject = Transformations.map(taskDao.getTasksByProject(), TaskDomainEntityMapper::mapToDomainList);
+    init {
+        val db = TodocRoomDatabase.getInstance(application)
+        taskDao = db.taskDao()
+        allTasks = taskDao.getTasks()
+            .map<List<TaskEntity>, List<TaskDomain>> { tasks: List<TaskEntity?>? ->
+                TaskDomainEntityMapper.mapToDomainList(tasks)
+            }
+        allTasksOrderByProject = taskDao.getTasksByProject()
+            .map<List<TaskEntity>, List<TaskDomain>> { tasks: List<TaskEntity?>? ->
+                TaskDomainEntityMapper.mapToDomainList(tasks)
+            }
     }
 
-    public LiveData<List<TaskDomain>> getAllTasks(){
-        return allTasks;
+    suspend fun insert(taskDomain: TaskDomain) {
+        taskDao.insert(
+            TaskDomainEntityMapper.mapToEntity(
+                taskDomain
+            )
+        )
     }
 
-    public LiveData<List<TaskDomain>> getAllTasksOrderByProject(){
-        return allTasksOrderByProject;
+    suspend fun delete(taskDomain: TaskDomain?) {
+        taskDao.delete(
+            TaskDomainEntityMapper.mapToEntity(
+                taskDomain
+            )
+        )
     }
-
-    public void insert(TaskDomain taskDomain){
-        TodocRoomDatabase.executors.execute(() -> { taskDao.insert(TaskDomainEntityMapper.mapToEntity(taskDomain));});
-    }
-
-    public void delete(TaskDomain taskDomain){
-        TodocRoomDatabase.executors.execute(() -> {taskDao.delete(TaskDomainEntityMapper.mapToEntity(taskDomain));});
-    }
-
 }

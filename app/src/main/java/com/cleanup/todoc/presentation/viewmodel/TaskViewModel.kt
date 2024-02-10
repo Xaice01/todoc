@@ -1,67 +1,75 @@
-package com.cleanup.todoc.presentation.viewmodel;
+package com.cleanup.todoc.presentation.viewmodel
 
-import android.app.Application;
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.cleanup.todoc.data.repository.ProjectRepository
+import com.cleanup.todoc.data.repository.TaskRepository
+import com.cleanup.todoc.domaine.model.ProjectDomain
+import com.cleanup.todoc.domaine.usecase.CreateTaskUseCase
+import com.cleanup.todoc.domaine.usecase.DeleteTaskUseCase
+import com.cleanup.todoc.domaine.usecase.GetProjectsUseCase
+import com.cleanup.todoc.domaine.usecase.GetTasksUseCase
+import com.cleanup.todoc.presentation.model.Project
+import com.cleanup.todoc.presentation.model.Task
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 
-import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
-
-import com.cleanup.todoc.data.repository.ProjectRepository;
-import com.cleanup.todoc.data.repository.TaskRepository;
-import com.cleanup.todoc.domaine.usecase.CreateTaskUseCase;
-import com.cleanup.todoc.domaine.usecase.DeleteTaskUseCase;
-import com.cleanup.todoc.domaine.usecase.GetProjectsUseCase;
-import com.cleanup.todoc.domaine.usecase.GetTasksUseCase;
-import com.cleanup.todoc.presentation.model.Project;
-import com.cleanup.todoc.presentation.model.Task;
-
-import java.util.List;
 /**
- * <p>ViewModel for MainActivity.</p>
+ *
+ * ViewModel for MainActivity.
  *
  * @author Xavier Carpentier
  */
-public class TaskViewModel extends AndroidViewModel {
-
+class TaskViewModel(application: Application) : AndroidViewModel(application) {
     //----------------------------------------------------
     //Data
     //----------------------------------------------------
-    private TaskRepository taskRepository;
-    private ProjectRepository projectRepository;
-    private LiveData<List<Task>> allTasks;
-    private LiveData<List<Project>> allProjects;
+    private val taskRepository: TaskRepository
+    private val projectRepository: ProjectRepository
+
+    @JvmField
+    val allTasks: Flow<List<Task>>
+
+    @JvmField
+    val allProjects: Flow<List<Project>>
 
     //----------------------------------------------------
     //UseCase
     //----------------------------------------------------
-    private GetTasksUseCase getTasksUseCase;
-    private GetProjectsUseCase getProjectsUseCase;
-    private CreateTaskUseCase createTaskUseCase;
-    private DeleteTaskUseCase deleteTaskUseCase;
-
+    private val getTasksUseCase: GetTasksUseCase
+    private val getProjectsUseCase: GetProjectsUseCase
+    private val createTaskUseCase: CreateTaskUseCase
+    private val deleteTaskUseCase: DeleteTaskUseCase
 
     //----------------------------------------------------
     //Constructor
     //----------------------------------------------------
-    public TaskViewModel(Application application){
-        super(application);
-        taskRepository = new TaskRepository(application);
-        projectRepository = new ProjectRepository(application);
-
-        getTasksUseCase = new GetTasksUseCase(taskRepository);
-        getProjectsUseCase = new GetProjectsUseCase(projectRepository);
-        createTaskUseCase = new CreateTaskUseCase(taskRepository);
-        deleteTaskUseCase = new DeleteTaskUseCase(taskRepository);
-
-        allTasks = getTasksUseCase.getAllTasks();
-        allProjects = getProjectsUseCase.getAllProjects();
+    init {
+        taskRepository = TaskRepository(application)
+        projectRepository = ProjectRepository(application)
+        getTasksUseCase = GetTasksUseCase(taskRepository)
+        getProjectsUseCase = GetProjectsUseCase(projectRepository)
+        createTaskUseCase = CreateTaskUseCase(taskRepository)
+        deleteTaskUseCase = DeleteTaskUseCase(taskRepository)
+        allTasks = getTasksUseCase.allTasks
+        allProjects = getProjectsUseCase.allProjects
     }
 
-    public LiveData<List<Task>> getAllTasks(){ return allTasks;}
+    fun createTask(task: Task) {
+        viewModelScope.launch { createTaskUseCase(task) }
+    }
 
-    public LiveData<List<Project>> getAllProjects(){return allProjects;}
+    fun deleteTask(task: Task) {
+        viewModelScope.launch { deleteTaskUseCase(task) }
+    }
 
-    public void createTask(Task task){createTaskUseCase.createTask(task);}
-
-    public void deleteTask(Task task){deleteTaskUseCase.deleteTask(task);}
-
+    fun insertBaseData() {
+        viewModelScope.launch {
+            projectRepository.insert(ProjectDomain(0, "Projet Tartampion", 0xFFEADAD1.toInt()))
+            projectRepository.insert(ProjectDomain(1, "Projet Lucidia", 0xFFB4CDBA.toInt()))
+        }
+    }
 }

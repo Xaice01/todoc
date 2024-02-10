@@ -1,46 +1,46 @@
-package com.cleanup.todoc.data.repository;
+package com.cleanup.todoc.data.repository
 
-import android.app.Application;
+import android.app.Application
+import com.cleanup.todoc.data.ProjectDomainEntityMapper
+import com.cleanup.todoc.datasource.dao.ProjectDao
+import com.cleanup.todoc.datasource.database.TodocRoomDatabase
+import com.cleanup.todoc.datasource.entity.ProjectEntity
+import com.cleanup.todoc.domaine.model.ProjectDomain
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Transformations;
-
-import com.cleanup.todoc.data.ProjectDomainEntityMapper;
-import com.cleanup.todoc.datasource.Entity.ProjectEntity;
-import com.cleanup.todoc.datasource.dao.ProjectDao;
-import com.cleanup.todoc.datasource.database.TodocRoomDatabase;
-import com.cleanup.todoc.domaine.model.ProjectDomain;
-
-import java.util.List;
-
-public class ProjectRepository {
-    private final ProjectDao projectDao;
-    LiveData<List<ProjectDomain>> allProjects;
-
+class ProjectRepository(application: Application?) {
+    private val projectDao: ProjectDao
+    @JvmField
+    var allProjects: Flow<List<ProjectDomain>>
 
     //constructor
-    public ProjectRepository(Application application){
-        TodocRoomDatabase db = TodocRoomDatabase.getInstance(application);
-        projectDao = db.projectDao();
-        LiveData<List<ProjectEntity>> livedata = projectDao.getProjects();
-        allProjects = Transformations.map(livedata, ProjectDomainEntityMapper::mapToDomainList);
+    init {
+        val db = TodocRoomDatabase.getInstance(application)
+        projectDao = db.projectDao()
+        val projectFlow = projectDao.getProjects()
+        allProjects = projectFlow.map { projects: List<ProjectEntity> ->
+            ProjectDomainEntityMapper.mapToDomainList(projects)
+        }
     }
 
-    public LiveData<List<ProjectDomain>> getAllProjects(){
-        return allProjects;
+    suspend fun insert(projectDomain: ProjectDomain) {
+            projectDao.insert(
+                ProjectDomainEntityMapper.mapToEntity(
+                    projectDomain
+                )
+            )
     }
 
-    public void insert(ProjectDomain projectDomain){
-        TodocRoomDatabase.executors.execute(() -> {projectDao.insert(ProjectDomainEntityMapper.mapToEntity(projectDomain));});
+    suspend fun delete(projectDomain: ProjectDomain) {
+            projectDao.delete(
+                ProjectDomainEntityMapper.mapToEntity(
+                    projectDomain
+                )
+            )
     }
 
-    public void delete(ProjectDomain projectDomain){
-        TodocRoomDatabase.executors.execute(() -> {projectDao.delete(ProjectDomainEntityMapper.mapToEntity(projectDomain));});
+    suspend fun deleteAll() {
+        projectDao.deleteAll()
     }
-
-    public void deleteAll(){
-        TodocRoomDatabase.executors.execute(() -> {projectDao.deleteAll();});
-    }
-
 }
-
