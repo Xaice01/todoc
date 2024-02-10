@@ -1,6 +1,5 @@
 package com.cleanup.todoc.domaine;
 
-import com.cleanup.todoc.datasource.Entity.TaskEntity;
 import com.cleanup.todoc.domaine.model.TaskDomain;
 import com.cleanup.todoc.presentation.model.Task;
 

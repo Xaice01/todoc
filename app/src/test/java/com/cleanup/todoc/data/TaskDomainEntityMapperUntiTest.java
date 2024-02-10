@@ -5,8 +5,8 @@ import static com.cleanup.todoc.data.TaskDomainEntityMapper.mapToDomainList;
 import static com.cleanup.todoc.data.TaskDomainEntityMapper.mapToEntity;
 import static org.junit.Assert.assertEquals;
 
-import com.cleanup.todoc.datasource.Entity.ProjectEntity;
-import com.cleanup.todoc.datasource.Entity.TaskEntity;
+import com.cleanup.todoc.datasource.entity.ProjectEntity;
+import com.cleanup.todoc.datasource.entity.TaskEntity;
 import com.cleanup.todoc.domaine.model.ProjectDomain;
 import com.cleanup.todoc.domaine.model.TaskDomain;
 

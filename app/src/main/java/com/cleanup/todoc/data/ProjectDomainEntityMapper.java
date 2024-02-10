@@ -1,6 +1,6 @@
 package com.cleanup.todoc.data;
 
-import com.cleanup.todoc.datasource.Entity.ProjectEntity;
+import com.cleanup.todoc.datasource.entity.ProjectEntity;
 import com.cleanup.todoc.domaine.model.ProjectDomain;
 
 import java.util.ArrayList;

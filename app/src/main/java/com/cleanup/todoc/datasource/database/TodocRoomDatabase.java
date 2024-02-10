@@ -10,8 +10,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.cleanup.todoc.datasource.dao.ProjectDao;
 import com.cleanup.todoc.datasource.dao.TaskDao;
-import com.cleanup.todoc.datasource.Entity.ProjectEntity;
-import com.cleanup.todoc.datasource.Entity.TaskEntity;
+import com.cleanup.todoc.datasource.entity.ProjectEntity;
+import com.cleanup.todoc.datasource.entity.TaskEntity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,52 +33,21 @@ public abstract class TodocRoomDatabase extends RoomDatabase {
     public abstract ProjectDao projectDao();
     public abstract TaskDao taskDao();
     //create executor with thread pool at 4
-    public static final ExecutorService executors = Executors.newFixedThreadPool(4);
 
     //marking the instance as volatile to ensure atomic access to the variable
     private static volatile TodocRoomDatabase INSTANCE;
 
-    private static Context mcontext;
-    private static TodocRoomDatabase.Callback todocRoomDatabaseCallback = new TodocRoomDatabase.Callback(){
-        @Override
-        public void onCreate(@NonNull SupportSQLiteDatabase db){
-            super.onCreate(db);
-
-            executors.execute(() -> {
-                //execute in a new thread
-                //populate the database in the background
-                ProjectDao projectDao = INSTANCE.projectDao();
-                TaskDao taskDao = INSTANCE.taskDao();
-                //clean all data
-                projectDao.deleteAll();
-
-                //add a fake data to start (add project before task)
-                List<ProjectEntity> listProjectEntity = getProjectFormJson(mcontext);
-
-                for(ProjectEntity projectEntity : listProjectEntity) {
-                    projectDao.insert(projectEntity);
-                }
-
-                //taskDao.insert(new TaskEntity(0,2L,"Test",new Date().getTime()));
-                //taskDao.insert(new TaskEntity(0,3L,"Test2",new Date().getTime()));
-
-            });
-
-
-        }
-    };
 
     /*
      * Create Singleton of TodocRoomDatabase
      */
     public static TodocRoomDatabase getInstance(final Context context) {
-        mcontext = context.getApplicationContext();
         if (INSTANCE == null) {
             synchronized (TodocRoomDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context,TodocRoomDatabase.class,"todoc_database")
-                            .addCallback(todocRoomDatabaseCallback)
-                            .build();
+
+                        .build();
                 }
             }
         }
@@ -105,8 +74,8 @@ public abstract class TodocRoomDatabase extends RoomDatabase {
                 projects.add(new ProjectEntity(id, name, color));
             }
         } catch (IOException | JSONException e) {
-            e.printStackTrace();
-        }
+        e.printStackTrace();
+    }
 
         return projects;
     }

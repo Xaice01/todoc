@@ -6,7 +6,7 @@ import static com.cleanup.todoc.data.ProjectDomainEntityMapper.mapToDomainList;
 import static com.cleanup.todoc.data.ProjectDomainEntityMapper.mapToEntity;
 import static org.junit.Assert.assertEquals;
 
-import com.cleanup.todoc.datasource.Entity.ProjectEntity;
+import com.cleanup.todoc.datasource.entity.ProjectEntity;
 import com.cleanup.todoc.domaine.model.ProjectDomain;
 
 import org.junit.Test;

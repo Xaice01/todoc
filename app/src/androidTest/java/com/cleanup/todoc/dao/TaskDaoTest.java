@@ -9,8 +9,8 @@ import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.cleanup.todoc.datasource.Entity.ProjectEntity;
-import com.cleanup.todoc.datasource.Entity.TaskEntity;
+import com.cleanup.todoc.datasource.entity.ProjectEntity;
+import com.cleanup.todoc.datasource.entity.TaskEntity;
 import com.cleanup.todoc.datasource.dao.ProjectDao;
 import com.cleanup.todoc.datasource.dao.TaskDao;
 import com.cleanup.todoc.datasource.database.TodocRoomDatabase;
